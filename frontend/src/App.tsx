@@ -1,33 +1,31 @@
+
 import { useState } from 'react'
 import './App.css'
+import { Box } from '@mui/material'
+import LookupSample from './components/LookupSample'
+import SubmitData from './components/SubmitData'
+
+const steps = {
+  0: LookupSample,
+  1: SubmitData
+}
 
 function App() {
-  const [status, setStatus] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-
-  async function checkHealth() {
-    setLoading(true)
-    setStatus(null)
-
-    try {
-      const response = await fetch('/api/')
-      if (!response.ok) throw new Error(`Request failed (${response.status})`)
-      const data: { status: string } = await response.json()
-      setStatus(`Backend status: ${data.status}`)
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Request failed')
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [step, setStep] = useState(0)
+  const StepComponent = steps[step as keyof typeof steps]
 
   return (
-    <main className="app">
-      <button type="button" onClick={checkHealth} disabled={loading}>
-        {loading ? 'Checking...' : 'Check backend health'}
-      </button>
-      {status && <p role="status">{status}</p>}
-    </main>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        bgcolor: 'grey.200',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <StepComponent onNext={() => setStep(step+1)} /> 
+    </Box>
   )
 }
 
