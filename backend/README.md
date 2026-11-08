@@ -1,6 +1,7 @@
-# Running in Dev
+# Running locally
 
 Starts the flask built-in dev server
+
 ```
 uv run flask --app app run \
   --debug \
