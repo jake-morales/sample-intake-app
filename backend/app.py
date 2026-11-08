@@ -49,18 +49,22 @@ def submit_sample():
     except ValidationError as e:
         return jsonify({"error": "Invalid data in payload", "validation_errors": [err["msg"] for err in e.errors()]}), 400
 
-    # Save data, if sample exists
+    # Get sample, if exists
+    try:
+        existing = db.get_sample(data.sample_id)
+    except db.SampleNotFoundError:
+        return jsonify({"error": f"Sample {data.sample_id} not found"}), 404
+
+    # Update sample and save to database
     sample = db.Sample(
         id=data.sample_id,
-        name=data.name,
-        date_of_birth=data.date_of_birth,
+        name=existing.name,
+        date_of_birth=existing.date_of_birth,
         collection_date=data.collection_date,
         notes=data.notes
     )
-    try:
-        db.update_sample(sample)
-    except db.SampleNotFoundError:
-        return jsonify({"error": f"Sample {data.sample_id} not found"}), 404
+    # No try/except needed: get_sample above already confirmed the sample exists
+    db.update_sample(sample)
     
     return jsonify({}),200
 
@@ -69,7 +73,5 @@ class GetSampleRequest(BaseModel):
 
 class SubmitSampleRequest(BaseModel):
     sample_id: UUID
-    name: str
-    date_of_birth: date
     collection_date: date
     notes: str | None = None # "= None" makes it omitable

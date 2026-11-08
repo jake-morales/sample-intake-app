@@ -21,6 +21,13 @@ uv run gunicorn app:app \
 
 4 workers as an arbitrary starting point.
 
+# Running unit tests
+
+```
+cd backend
+uv run pytest
+```
+
 # Notes
 
 - Initialized git
