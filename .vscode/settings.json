@@ -1,0 +1,4 @@
+{
+  "python.defaultInterpreterPath": "/Users/jakemorales/zymo/sample-intake-app/backend/.venv/bin/python",
+  "python.analysis.extraPaths": ["${workspaceFolder}/backend"]
+}
