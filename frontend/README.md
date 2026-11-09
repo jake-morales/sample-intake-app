@@ -1,3 +1,13 @@
+# Installing
+
+Requires [Node.js](https://nodejs.org/) `^20.19 || >=22.12` (needed by Vite). From the `frontend/` directory:
+
+```
+npm install
+```
+
+This installs all dependencies from `package-lock.json` into `node_modules/`.
+
 # Running locally
 
 `npm run dev` - TODO: enable cors since backend is on different port. or setup dev forwarding.

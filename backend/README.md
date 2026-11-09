@@ -1,3 +1,13 @@
+# Installing
+
+Requires [uv](https://docs.astral.sh/uv/). From the `backend/` directory:
+
+```
+uv sync
+```
+
+This creates a virtual environment and installs all dependencies from `uv.lock`.
+
 # Running locally
 
 Starts the flask built-in dev server
@@ -49,8 +59,6 @@ curl -X POST http://localhost:8000/api/sample/submit \
   -H "Content-Type: application/json" \
   -d '{"sample_id": "3f6f3d21-9b9c-4b1a-a4d6-2a1f0e9c8b7a", "collection_date": "2024-03-01", "notes": "example note"}'
 ```
-
-
 
 # Notes
 
