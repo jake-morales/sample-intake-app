@@ -12,6 +12,7 @@ const steps = {
 
 function App() {
   const [step, setStep] = useState(0)
+  const [sampleId, setSampleId] = useState<string>()
   const StepComponent = steps[step as keyof typeof steps]
 
   return (
@@ -24,7 +25,7 @@ function App() {
         justifyContent: 'center',
       }}
     >
-      <StepComponent onNext={() => setStep(step+1)} /> 
+      <StepComponent sampleId={sampleId} onNext={(id) => { setSampleId(id); setStep(step+1) }} /> 
     </Box>
   )
 }

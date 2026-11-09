@@ -1,6 +1,5 @@
-import { alpha, Box, Button, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Alert, alpha, Box, Button, Paper, Stack, TextField, Typography } from '@mui/material'
 import CheckCircleOutline from '@mui/icons-material/CheckCircleOutlineOutlined'
-import ErrorOutline from '@mui/icons-material/ErrorOutlineOutlined'
 import type { StepProps } from '../types'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -37,8 +36,8 @@ function LookupSample({ onNext }: StepProps) {
           </Button>
         </Stack>
         {isLoading && <Typography>Loading…</Typography>}
-        {isError && <ErrorPanel message={error.message} />}
-        {data && <SampleResult sample={data} onConfirm={onNext} />}
+        {isError && <Alert severity="error">{error.message}</Alert>}
+        {data && <SampleResult sample={data} onConfirm={() => onNext(submittedId)} />}
       </Stack>
     </Paper>
   )
@@ -60,18 +59,6 @@ function SampleResult({ sample, onConfirm }: { sample: { name: string; date_of_b
         <Button variant="contained" onClick={onConfirm}>
           Confirm
         </Button>
-      </Stack>
-    </Box>
-  )
-}
-
-function ErrorPanel({ message }: { message: string }) {
-  return (
-    <Box sx={{ bgcolor: (theme) => alpha(theme.palette.error.main, 0.08), borderRadius: 2, p: 2 }}>
-      <Typography variant="overline" color="error">Error</Typography>
-      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-        <ErrorOutline color="error" fontSize="small" />
-        <Typography variant="body2">{message}</Typography>
       </Stack>
     </Box>
   )

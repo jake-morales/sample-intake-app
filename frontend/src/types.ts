@@ -1,3 +1,4 @@
 export interface StepProps {
-  onNext: () => void
+  onNext: (sampleId?: string) => void
+  sampleId?: string
 }
