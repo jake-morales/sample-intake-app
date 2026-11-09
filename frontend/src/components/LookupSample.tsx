@@ -37,35 +37,43 @@ function LookupSample({ onNext }: StepProps) {
           </Button>
         </Stack>
         {isLoading && <Typography>Loading…</Typography>}
-        {isError && (
-          <Box sx={{ bgcolor: (theme) => alpha(theme.palette.error.main, 0.08), borderRadius: 2, p: 2 }}>
-            <Typography variant="overline" color="error">Error</Typography>
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <ErrorOutline color="error" fontSize="small" />
-              <Typography variant="body2">{error.message}</Typography>
-            </Stack>
-          </Box>
-        )}
-        {data && (
-          <Box sx={{ bgcolor: (theme) => alpha(theme.palette.primary.main, 0.06), borderRadius: 2, p: 2 }}>
-            <Typography variant="overline" color="text.secondary">Result</Typography>
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <CheckCircleOutline color="success" fontSize="small" />
-              <Typography variant="h6">{data.name}</Typography>
-            </Stack>
-            <Stack direction="row" spacing={0.5} sx={{ alignItems: 'baseline' }}>
-              <Typography variant="body2" color="text.secondary">Date of birth: </Typography>
-              <Typography variant="body2">{data.date_of_birth}</Typography>
-            </Stack>
-            <Stack direction="row" sx={{ justifyContent: 'flex-end', mt: 2 }}>
-              <Button variant="contained" onClick={onNext}>
-                Confirm
-              </Button>
-            </Stack>
-          </Box>
-        )}
+        {isError && <ErrorPanel message={error.message} />}
+        {data && <SampleResult sample={data} onConfirm={onNext} />}
       </Stack>
     </Paper>
+  )
+}
+
+function SampleResult({ sample, onConfirm }: { sample: { name: string; date_of_birth: string }; onConfirm: () => void }) {
+  return (
+    <Box sx={{ bgcolor: (theme) => alpha(theme.palette.primary.main, 0.06), borderRadius: 2, p: 2 }}>
+      <Typography variant="overline" color="text.secondary">Result</Typography>
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <CheckCircleOutline color="success" fontSize="small" />
+        <Typography variant="h6">{sample.name}</Typography>
+      </Stack>
+      <Stack direction="row" spacing={0.5} sx={{ alignItems: 'baseline' }}>
+        <Typography variant="body2" color="text.secondary">Date of birth: </Typography>
+        <Typography variant="body2">{sample.date_of_birth}</Typography>
+      </Stack>
+      <Stack direction="row" sx={{ justifyContent: 'flex-end', mt: 2 }}>
+        <Button variant="contained" onClick={onConfirm}>
+          Confirm
+        </Button>
+      </Stack>
+    </Box>
+  )
+}
+
+function ErrorPanel({ message }: { message: string }) {
+  return (
+    <Box sx={{ bgcolor: (theme) => alpha(theme.palette.error.main, 0.08), borderRadius: 2, p: 2 }}>
+      <Typography variant="overline" color="error">Error</Typography>
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <ErrorOutline color="error" fontSize="small" />
+        <Typography variant="body2">{message}</Typography>
+      </Stack>
+    </Box>
   )
 }
 
